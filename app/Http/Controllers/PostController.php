@@ -65,7 +65,7 @@ class PostController extends Controller{
             $validate = \Validator::make($params_array,[
                 'category_id' => 'required',
                 'title' => 'required',
-                'description' => 'required'
+                'content' => 'required'
             ]);
 
             //Guardar la entrada
@@ -73,7 +73,7 @@ class PostController extends Controller{
                 $data = [
                     'code' => 400,
                     'status' => 'error',
-                    'message' => 'No se ha guardado la entrada.',
+                    'message' => 'No se ha guardado el post, faltan datos.',
                     'errors' => $validate->errors()
                 ];
             }else {
@@ -95,7 +95,7 @@ class PostController extends Controller{
             $data = [
                 'code' => 400,
                 'status' => 'error',
-                'message' => 'No has enviado ninguna entrada.'
+                'message' => 'Envia los datos correctamente.'
             ];
         }
 
