@@ -13,7 +13,7 @@ class JwtAuth{
     }
 
     public function signup($email, $password, $getToken=null){
-        
+
         //Buscar si existe el usuario con sus credenciales
         $user = User::where([
             'email' => $email,
@@ -53,7 +53,7 @@ class JwtAuth{
                 'message' => 'Login incorrecto.'
             );
         }
-        
+
         return $data;
     }
 
@@ -80,9 +80,9 @@ class JwtAuth{
         }
 
         return $auth;
-        
+
     }
-    
+
 }
 
 

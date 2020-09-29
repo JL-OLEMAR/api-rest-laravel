@@ -41,7 +41,7 @@ Route::get('/', function () {
     Route::get('/api/user/detail/{id}','UserController@detail');
 
     //Rutas del controlador de categorias
-    Route::resource('/api/category', 'CategoryController')->middleware(ApiAuthMiddleware::class);;
+    Route::resource('/api/category', 'CategoryController')->middleware(ApiAuthMiddleware::class);
 
     //Rutas del controlador de entrada
-    Route::resource('/api/entrada', 'PostController')->middleware(ApiAuthMiddleware::class);;
+    Route::resource('/api/entrada', 'PostController')->middleware(ApiAuthMiddleware::class);
