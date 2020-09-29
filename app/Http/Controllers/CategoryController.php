@@ -51,6 +51,8 @@ class CategoryController extends Controller{
         $params_array = json_decode($json, true);
 
         if (!empty($params_array)) {
+            //Limpiar datos
+            $params_array = array_map('trim', $params_array);
 
             //Validar los datos
             $validate = \Validator::make($params_array,[
@@ -62,7 +64,8 @@ class CategoryController extends Controller{
                 $data = [
                     'code' => 400,
                     'status' => 'error',
-                    'message' => 'No se ha guardado la categoria.'
+                    'message' => 'No se ha guardado la categoria.',
+                    'errors' => $validate->errors()
                 ];
             }else {
                 $category = new Category();
@@ -72,6 +75,7 @@ class CategoryController extends Controller{
                 $data = [
                     'code' => 200,
                     'status' => 'success',
+                    'message' => 'La categoria se ha creado correctamente',
                     'category' => $category
                 ];
             }

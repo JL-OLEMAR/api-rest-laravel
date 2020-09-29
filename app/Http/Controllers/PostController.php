@@ -25,4 +25,118 @@ class PostController extends Controller{
             'posts' => $posts
         ]);
     }
+
+    public function show($id){
+        $post = Post::find($id);
+
+        if (is_object($post)) {
+            $data = [
+                'code' => 200,
+                'status' => 'success',
+                'post' => $post
+            ];
+        }else {
+            $data = [
+                'code' => 404,
+                'status' => 'error',
+                'message' => 'La entrada no existe.'
+            ];
+        }
+        return response()->json($data, $data['code']);
+    }
+
+    public function store(Request $request){
+        //Recoger los datos de la entrada por post
+        $json = $request->input('json', null);
+        $params = json_decode($json); //objeto
+        $params_array = json_decode($json, true);
+
+        if (!empty($params_array)) {
+            //Limpiar datos
+            $params_array = array_map('trim', $params_array);
+
+            //Validar los datos
+            $validate = \Validator::make($params_array,[
+                'user_id' => 'required',
+                'category_id' => 'required',
+                'title' => 'required'
+            ]);
+
+            //Guardar la entrada
+            if ($validate->fails()) {
+                $data = [
+                    'code' => 400,
+                    'status' => 'error',
+                    'message' => 'No se ha guardado la entrada.',
+                    'errors' => $validate->errors()
+                ];
+            }else {
+                $post = new Post();
+                $post->user_id = $params_array['user_id'];
+                $post->category_id = $params_array['category_id'];
+                $post->title = $params_array['title'];
+                $post->content = $params_array['content'];
+                $post->save();
+
+                $data = [
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'La entrada se ha creado correctamente',
+                    'post' => $post
+                ];
+            }
+        }else {
+            $data = [
+                'code' => 400,
+                'status' => 'error',
+                'message' => 'No has enviado ninguna entrada.'
+            ];
+        }
+
+        //Devolver resultados
+        return response()->json($data, $data['code']);
+    }
+
+    public function update($id, Request $request){
+        //Recoger datos por post
+        $json = $request->input('json', null);
+        $params_array = json_decode($json, true);
+
+        if (!empty($params_array)) {
+            //Limpiar datos
+            $params_array = array_map('trim', $params_array);
+
+            //Validar los datos
+            $validate = \Validator::make($params_array, [
+                'user_id' => 'required',
+                'category_id' => 'required',
+                'title' => 'required'
+            ]);
+
+            //Quitar lo que no quiero actualizar
+            unset($params_array['id']);
+            unset($params_array['created_at']);
+
+            //Actualizar el registro(Categoria)
+            $post = Post::where('id', $id)->update($params_array);
+            $data = [
+                'code' => 200,
+                'status' => 'success',
+                'post' => $params_array
+            ];
+
+        } else {
+            $data = [
+                'code' => 400,
+                'status' => 'error',
+                'message' => 'No has enviado ninguna entrada.'
+            ];
+        }
+
+        //Devolver respuesta
+        return response()->json($data, $data['code']);
+    }
+
+
 }
+
