@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Post;
+use App\Helpers\JwtAuth;
 
 class PostController extends Controller{
 
@@ -17,17 +18,17 @@ class PostController extends Controller{
     }
 
     public function index(){
-        $posts = Post::all();
+        $posts = Post::all()->load('category');
 
         return response()->json([
             'code' => 200,
             'status' => 'success',
             'posts' => $posts
-        ]);
+        ],200);
     }
 
     public function show($id){
-        $post = Post::find($id);
+        $post = Post::find($id)->load('category');
 
         if (is_object($post)) {
             $data = [
@@ -51,15 +52,20 @@ class PostController extends Controller{
         $params = json_decode($json); //objeto
         $params_array = json_decode($json, true);
 
-        if (!empty($params_array)) {
+        if (!empty($params_array) && !empty($params_array)) {
             //Limpiar datos
             $params_array = array_map('trim', $params_array);
 
+            //Conseguir usuario identificado
+            $jwtAuth = new JwtAuth();
+            $token = $request->header('Authorization', null);
+            $user = $jwtAuth->checkToken($token, true);
+
             //Validar los datos
             $validate = \Validator::make($params_array,[
-                'user_id' => 'required',
                 'category_id' => 'required',
-                'title' => 'required'
+                'title' => 'required',
+                'description' => 'required'
             ]);
 
             //Guardar la entrada
