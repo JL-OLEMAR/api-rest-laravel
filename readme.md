@@ -27,6 +27,7 @@ en la carpeta storage/app/ crear las carpetas
 /users
 
 luego en la carpeta: config/filesystems.php pegar lo sgte:
+
     'users' => [
         'driver' => 'local',
         'root' => storage_path('app/users'),
