@@ -8,9 +8,9 @@ use App\User;
 
 class UserController extends Controller {
 
-    public function pruebas(Request $request) {
+    /*public function pruebas(Request $request) {
         return "Accion de pruebas de USER-CONTROLLER";
-    }
+    }*/
 
     public function register(Request $request) {
         //Recoger los datos del usuario por post
@@ -144,7 +144,8 @@ class UserController extends Controller {
             unset($params_array['remember_token']);
 
             //Actualizar usuario en BD
-            $user_update = User::where('id', $user->sub)->update($params_array);
+            $user_update = User::where('id', $user->sub)
+                            ->update($params_array);
 
             //Devolver array con resultado
             $data = array(
@@ -207,7 +208,6 @@ class UserController extends Controller {
             );
             return response()->json($data, $data['code']);
         }
-
     }
 
     public function detail($id){
