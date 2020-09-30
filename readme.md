@@ -1,10 +1,10 @@
-                                              ----------------API REST con LARAVEL-------------------------    
+      ----------------API REST con LARAVEL-----------------------   
 
---------en---cmd----------------------------------------------
+-----------------en---cmd----------------------------------------                                             
 Primero tiene que actualizar el composer en una ventana de cmd:
 composer update
 
---------en---la-consola-de-artisan--------------------------------
+----------------en---la-consola-de-artisan-----------------------                                             
 Recorda que deves tener el archivo .env
 Si no lo tienes tienes que copiar desde el archivo .env.example y completar la BD.
 
@@ -20,13 +20,14 @@ servicio artesanal php
 
 
 
---------CONFIGURAR PARA LA SUBIDA DE IMAGENES--------------------
+--------CONFIGURAR PARA LA SUBIDA DE IMAGENES------------------
 
 en la carpeta storage/app/ crear las carpetas
 /images
 /users
 
 luego en la carpeta: config/filesystems.php pegar lo sgte:
+
     'users' => [
         'driver' => 'local',
         'root' => storage_path('app/users'),
