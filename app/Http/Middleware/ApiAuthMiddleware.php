@@ -22,7 +22,7 @@ class ApiAuthMiddleware
 
         if ($checkToken) {
             return $next($request);
-        }else {
+        } else {
             $data = array(
                 'code' => 400,
                 'status' => 'error',
@@ -30,7 +30,5 @@ class ApiAuthMiddleware
             );
             return response()->json($data, $data['code']);
         }
-
-
     }
 }
