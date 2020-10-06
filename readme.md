@@ -1,5 +1,6 @@
-      ----------------API REST con LARAVEL-----------------------   
+# API REST con LARAVEL  
 
+## Ajustes
 -----------------en---cmd----------------------------------------                                             
 Primero tiene que actualizar el composer en una ventana de cmd:
 composer update
