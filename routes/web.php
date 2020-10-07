@@ -45,7 +45,7 @@ Route::get('/', function () {
 
     //Rutas del controlador de entrada
     Route::resource('/api/post', PostController::class);
-    Route::post('/api/post/upload','PostController@upload')->middleware(ApiAuthMiddleware::class);
+    Route::post('/api/post/upload','PostController@upload');
     Route::get('/api/post/image/{filename}','PostController@getImage');
     Route::get('/api/post/category/{id}','PostController@getPostsByCategory');
     Route::get('/api/post/user/{id}','PostController@getPostsByUser');
