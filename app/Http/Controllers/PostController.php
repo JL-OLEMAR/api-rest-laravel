@@ -283,15 +283,12 @@ class PostController extends Controller{
     }
 
     public function getPostsByUser($id,Request $request){
-        //Comprobar si el usuario esta identficado
-        $user = $this->getIdentity($request);
         $posts = Post::where('user_id', $id)->get();
 
         return response()->json([
             'code' => 200,
             'status' => 'success',
-            'posts' => $posts,
-            'user' => $user
+            'posts' => $posts
         ], 200);
     }
 }
